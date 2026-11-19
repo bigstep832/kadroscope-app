@@ -1,0 +1,13 @@
+node_modules/
+dist/
+data/
+.sites/
+.env
+.env.*
+!.env.example
+.openai/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.log
+

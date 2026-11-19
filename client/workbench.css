@@ -1,0 +1,786 @@
+/* Compact project controls and the live status chart. */
+.cancelFocus {
+  position: absolute;
+  bottom: calc(100% + 5px);
+  right: 0;
+  background: #30263e;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  box-shadow: 0 3px 15px #291c3e25;
+}
+.cancelFocus button {
+  background: #574466;
+  color: white;
+  border-radius: 3px;
+  padding: 5px 7px;
+}
+:root {
+  --edge: #dad9e1;
+  --grape: #6241b6;
+  --ink: #292536;
+  --line: #dbd8e4;
+}
+.workspace,
+.tablescroll,
+.stats > div,
+.filterpanel {
+  border-radius: 6px;
+}
+.modal {
+  border-radius: 8px;
+}
+.search,
+.btn,
+.primary,
+.sidelink,
+.projectlink,
+.joinlink,
+.form input,
+.form select,
+.form textarea,
+.inlineform input {
+  border-radius: 4px;
+}
+.taskcard {
+  border-radius: 4px;
+  border-color: #dcdbe2;
+  box-shadow: 0 1px 0 #2721390b;
+}
+.taskcard:hover {
+  box-shadow: 0 2px 0 #b8a9d8;
+}
+.lane {
+  border-radius: 5px;
+  border-color: #dfdee5;
+}
+.cardart,
+.tag,
+.lanehead > span,
+.total,
+.logo {
+  border-radius: 3px;
+}
+.lane.todo .lanehead > svg {
+  color: #697584;
+}
+.lane.doing .lanehead > svg {
+  color: #8047cf;
+}
+.sidelink.active {
+  box-shadow: inset 2px 0 #7650d3;
+}
+.pulseHero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 32%);
+  gap: 25px;
+  align-items: center;
+  min-height: 175px;
+  padding: 22px clamp(20px, 2.5vw, 38px);
+  overflow: hidden;
+  border-radius: 6px;
+  background: #2c243f;
+  color: #fbf9ff;
+}
+.pulseHero:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(90deg, #ccc0ec10 1px, transparent 1px),
+    linear-gradient(#ccc0ec10 1px, transparent 1px);
+  background-size: 23px 23px;
+  mask-image: linear-gradient(90deg, #0002, black);
+}
+.pulseIntro {
+  min-width: 0;
+}
+.pulseLabel,
+.plotTitle,
+.pulseProgress,
+.weekbar > div,
+.weekbar nav,
+.cmdTrigger,
+.taskTools,
+.toolButton,
+.archivedHint,
+.archiveRow,
+.noDate h3,
+.workToast,
+.focusDock,
+.dockSave,
+.paletteFoot {
+  display: flex;
+  align-items: center;
+}
+.pulseLabel,
+.plotTitle {
+  gap: 7px;
+  color: #d8cee9;
+  font-size: 0.8rem;
+}
+.pulseLabel svg {
+  color: #c9a9f8;
+}
+.pulseHero h1 {
+  font-size: clamp(1.8rem, 3.1vw, 3.05rem);
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+  font-weight: 650;
+  margin: 10px 0 18px;
+  overflow-wrap: anywhere;
+}
+.pulseProgress {
+  gap: 9px;
+  flex-wrap: wrap;
+  color: #e2dbea;
+  font-size: 0.8rem;
+}
+.pulseProgress b {
+  font-variant-numeric: tabular-nums;
+  color: white;
+}
+.pixelTrack {
+  display: flex;
+  gap: 2px;
+}
+.pixelTrack i {
+  display: block;
+  width: 4px;
+  height: 12px;
+  background: #61556f;
+}
+.pixelTrack i.filled {
+  background: #c6a4ff;
+}
+.pulsePlot {
+  border-left: 1px solid #ffffff29;
+  padding: 0 0 0 23px;
+}
+.plotTitle {
+  font-weight: 550;
+  font-size: 0.76rem;
+}
+.plotColumns {
+  display: flex;
+  gap: 5px;
+  margin-top: 1px;
+}
+.plotCol {
+  min-width: 0;
+  flex: 1;
+  padding: 2px;
+  color: #eee6fb;
+  text-align: left;
+  border-radius: 2px;
+  --bar: #b0a3c6;
+}
+.plotCol.doing {
+  --bar: #b996f5;
+}
+.plotCol.review {
+  --bar: #fac38a;
+}
+.plotCol.done {
+  --bar: #a1d5bb;
+}
+.plotCol:hover,
+.plotCol[aria-pressed="true"] {
+  background: #ffffff12;
+}
+.barArea {
+  position: relative;
+  height: 82px;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  border-bottom: 1px solid #ffffff38;
+}
+.barArea i {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 4px,
+      #2c243f5e 4px,
+      #2c243f5e 5px
+    ),
+    var(--bar);
+  width: clamp(13px, 2.2vw, 35px);
+  display: block;
+  transition: height 0.2s ease-out;
+}
+.barArea b {
+  font-size: 0.81rem;
+  color: var(--bar);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  padding-bottom: 2px;
+}
+.plotName {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.69rem;
+  white-space: nowrap;
+}
+.cmdTrigger {
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #5c576b;
+  padding: 5px 7px;
+  border: 1px solid var(--edge);
+  border-radius: 4px;
+}
+.cmdTrigger:hover,
+.toolButton:hover {
+  background: #f4f0fa;
+}
+kbd {
+  font: inherit;
+  font-size: 0.7rem;
+  border: 1px solid #d9d6df;
+  border-radius: 3px;
+  padding: 1px 4px;
+  color: #746e7d;
+  white-space: nowrap;
+}
+.statusChip {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 0.8rem;
+  background: #f0e9fb;
+  color: #634291;
+  padding: 6px 8px;
+  border-radius: 3px;
+}
+.taskTools {
+  gap: 8px;
+  margin: 0 0 14px;
+}
+.toolButton {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  border: 1px solid #dad4e7;
+  background: #fbf9ff;
+  color: #604589;
+  padding: 6px 9px;
+  font-size: 0.81rem;
+  border-radius: 4px;
+}
+.toolButton:disabled {
+  opacity: 0.65;
+}
+.archiveAction {
+  margin-left: auto;
+  color: #6a6274;
+  background: #fff;
+}
+.archivedHint {
+  color: #7b7385;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+.commandSearch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #b6a0d9;
+  padding: 10px 12px;
+  border-radius: 4px;
+  color: var(--grape);
+}
+.commandSearch input {
+  border: 0;
+  background: transparent;
+  font: inherit;
+  outline: 0;
+  width: 100%;
+  font-size: 1rem;
+}
+.commandSearch:focus-within {
+  outline: 2px solid #c9b7ed;
+}
+.commandResults {
+  max-height: min(48vh, 420px);
+  overflow-y: auto;
+  margin: 12px 0;
+}
+.resultGroup {
+  font-size: 0.77rem;
+  color: #736c7f;
+  font-weight: 650;
+  margin: 10px 8px 5px;
+}
+.commandItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 8px;
+  text-align: left;
+  border-radius: 3px;
+  font-size: 0.9rem;
+}
+.commandItem > svg:first-child {
+  color: #7b6d8d;
+}
+.commandItem > span {
+  flex: 1;
+}
+.commandItem[aria-selected="true"],
+.commandItem:hover {
+  background: #eee8f9;
+  color: #583687;
+}
+.commandItem small {
+  font-size: 0.74rem;
+}
+.paletteFoot {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  gap: 7px;
+  font-size: 0.75rem;
+  color: #766d80;
+}
+.paletteFoot kbd:not(:first-child) {
+  margin-left: 7px;
+}
+.paletteEmpty,
+.noDate p {
+  font-size: 0.86rem;
+  color: #787383;
+  margin: 12px 0;
+}
+.weekbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--edge);
+  border-bottom: 0;
+  background: #faf9fc;
+}
+.weekbar > div,
+.weekbar nav {
+  gap: 6px;
+}
+.weekbar h3 {
+  font-size: 0.95rem;
+  font-weight: 620;
+}
+.weekbar .btn {
+  min-height: 30px;
+  padding: 4px 8px;
+}
+.weekgrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border: 1px solid var(--edge);
+}
+.weekday {
+  min-width: 0;
+  min-height: 238px;
+  border-right: 1px solid var(--edge);
+  padding: 8px 6px;
+}
+.weekday:nth-child(n + 6) {
+  background: #f8f7f9;
+}
+.weekday:last-child {
+  border: 0;
+}
+.weekday.today {
+  box-shadow: inset 0 3px #8254c4;
+  background: #faf7ff;
+}
+.dayhead {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin: 0 2px 12px;
+}
+.dayhead > span {
+  font-size: 0.75rem;
+  color: #737080;
+}
+.dayhead > b {
+  font-size: 1.12rem;
+  letter-spacing: -0.06em;
+}
+.dayhead button {
+  margin-left: auto;
+  padding: 2px;
+}
+.today .dayhead > b {
+  color: #6d40ae;
+}
+.daytasks {
+  display: grid;
+  gap: 6px;
+}
+.planTask {
+  min-width: 0;
+  text-align: left;
+  background: #f4f3f6;
+  border-left: 3px solid #9795a0;
+  padding: 8px;
+  border-radius: 2px;
+  overflow-wrap: anywhere;
+}
+.planTask.doing {
+  background: #f0eafa;
+  border-color: #9d77d4;
+}
+.planTask.review {
+  background: #fbefe3;
+  border-color: #d5a168;
+}
+.planTask.done {
+  background: #e8f2ed;
+  border-color: #73a78c;
+}
+.planTask:hover {
+  outline: 1px solid #b4a5c5;
+}
+.planTask[draggable="true"] {
+  cursor: grab;
+}
+.planLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #665d71;
+  font-size: 0.7rem;
+  gap: 3px;
+  margin-bottom: 4px;
+}
+.planTask strong {
+  font-size: 0.84rem;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+.noPlan {
+  font-size: 0.75rem;
+  color: #827d87;
+}
+.dropTarget {
+  outline: 2px dashed #8d6abd;
+  outline-offset: -3px;
+}
+.noDate {
+  padding: 15px 0;
+  margin-top: 10px;
+}
+.noDate h3 {
+  gap: 7px;
+  font-size: 0.94rem;
+}
+.noDate h3 span {
+  font-size: 0.77rem;
+  color: #756d81;
+}
+.unscheduled {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 7px;
+  margin-top: 11px;
+}
+.archiveBlank {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  text-align: center;
+  border: 1px dashed #c9c3d3;
+  padding: 44px 18px;
+}
+.archiveBlank svg {
+  color: #8b7c9d;
+}
+.archiveBlank h3 {
+  font-size: 1.08rem;
+}
+.archiveBlank p {
+  max-width: 420px;
+  color: #716a7d;
+  font-size: 0.9rem;
+}
+.archiveRow {
+  gap: 12px;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--line);
+}
+.archiveRow > svg {
+  color: #8f879b;
+}
+.archiveRow .tasklink {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+.focusDock,
+.workToast {
+  position: fixed;
+  z-index: 6;
+  right: 26px;
+  bottom: 18px;
+  gap: 9px;
+  box-shadow: 0 6px 24px #2517382c;
+  border-radius: 5px;
+}
+.focusDock {
+  background: #30263e;
+  color: #f8f2ff;
+  padding: 9px 11px;
+  max-width: min(520px, calc(100vw - 24px));
+}
+.focusSymbol {
+  color: #d0b5f9;
+}
+.focusTitle {
+  max-width: 175px;
+  min-width: 0;
+}
+.focusTitle small {
+  display: block;
+  color: #cec0dc;
+  font-size: 0.72rem;
+}
+.focusTitle button {
+  color: inherit;
+  font-size: 0.86rem;
+  font-weight: 560;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+  padding: 1px 0;
+}
+.focusDock output {
+  font-size: 1.12rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 630;
+}
+.dockAction,
+.dockSave {
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  min-height: 32px;
+  border-radius: 3px;
+  background: #493954;
+}
+.dockSave {
+  gap: 4px;
+  background: #e6d5ff;
+  color: #37204f;
+  font-size: 0.79rem;
+  font-weight: 650;
+}
+.focusDock button:disabled {
+  opacity: 0.5;
+}
+.workToast {
+  font-size: 0.87rem;
+  background: #30263e;
+  color: white;
+  padding: 10px 13px;
+}
+.workToast.withDock {
+  bottom: 85px;
+}
+.workToast button {
+  color: #d8baff;
+  display: inline-flex;
+  padding: 3px;
+}
+.workToast > svg {
+  color: #b4dbc3;
+}
+.shell:has(.focusDock) main {
+  padding-bottom: 85px;
+}
+@media (max-width: 1050px) {
+  .pulseHero {
+    gap: 16px;
+    grid-template-columns: minmax(0, 1fr) minmax(224px, 35%);
+  }
+  .pulsePlot {
+    padding-left: 14px;
+  }
+  .weekgrid {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+  .planLabel svg {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .pulseHero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding: 17px 18px;
+    min-height: 0;
+  }
+  .pulseHero h1 {
+    margin: 6px 0 9px;
+    font-size: 1.9rem;
+  }
+  .pulsePlot {
+    border: 0;
+    border-top: 1px solid #ffffff26;
+    padding: 8px 0 0;
+  }
+  .plotTitle {
+    display: none;
+  }
+  .plotColumns {
+    gap: 8px;
+  }
+  .plotCol {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .plotName {
+    margin: 0;
+    font-size: 0.72rem;
+  }
+  .barArea {
+    height: auto;
+    border: 0;
+    align-items: center;
+    gap: 4px;
+  }
+  .barArea i {
+    width: 5px;
+    height: 10px !important;
+    background: var(--bar);
+  }
+  .barArea b {
+    padding: 0;
+  }
+  .weekgrid {
+    display: flex;
+    flex-direction: column;
+  }
+  .weekday {
+    min-height: 68px;
+    display: grid;
+    grid-template-columns: 61px 1fr;
+    gap: 8px;
+    border: 0;
+    border-bottom: 1px solid var(--edge);
+  }
+  .weekday.today {
+    box-shadow: inset 3px 0 #8254c4;
+  }
+  .dayhead {
+    align-self: start;
+    gap: 3px;
+  }
+  .daytasks {
+    align-content: start;
+    grid-template-columns: repeat(auto-fit, minmax(min(120px, 100%), 1fr));
+  }
+  .noPlan {
+    margin: 3px 0;
+  }
+  .weekbar {
+    padding: 8px;
+  }
+  .weekbar h3 {
+    font-size: 0.85rem;
+  }
+  .cmdTrigger span,
+  .cmdTrigger kbd {
+    display: none;
+  }
+  .viewbar {
+    gap: 1px;
+  }
+  .tabs {
+    gap: 13px;
+  }
+  .team > span:not(.stack),
+  .team > svg {
+    display: none;
+  }
+  .archiveRow {
+    gap: 7px;
+  }
+  .archiveRow .tag {
+    display: none;
+  }
+}
+@media (max-width: 450px) {
+  .tabs {
+    gap: 9px;
+  }
+  .tabs button {
+    font-size: 0.77rem;
+  }
+  .tabs button svg {
+    width: 13px;
+  }
+  .team {
+    padding: 3px;
+  }
+  .stack .ava {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .breadcrumb b {
+    max-width: 38vw;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .focusDock {
+    right: 8px;
+    bottom: 8px;
+    gap: 5px;
+    max-width: calc(100vw - 16px);
+    padding: 8px;
+  }
+  .focusSymbol {
+    display: none;
+  }
+  .focusTitle {
+    max-width: 105px;
+  }
+  .focusDock output {
+    font-size: 1rem;
+  }
+  .plotColumns {
+    gap: 4px;
+  }
+  .paletteFoot {
+    gap: 5px;
+  }
+  .filterrow {
+    flex-wrap: wrap;
+  }
+  .filterrow .search {
+    min-width: 120px;
+  }
+  .weekbar > div > svg {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .barArea i {
+    transition: none;
+  }
+}
